@@ -23,10 +23,30 @@
                     data: {'product': product,'price': price},
                     success: function (data) {
                     console.log(data);
+                    alert("상품을 장바구니에 성공적으로 담았습니다.");
                     }
                 });
+
+                count();
+                location.reload();
             
-            }  
+            }
+
+            function count(){
+                $.ajax({
+                    url:'/count',
+                    success:function(data) {
+                        console.log(data);
+                        var receivedData = data;
+                        var countBadge = document.getElementById("countBadge");
+                        countBadge.textContent = receivedData;
+                    }
+                  });
+            }
+            //한 페이지에는 하나의 window.onload() 함수만 적용
+            window.onload = function(){
+                count();
+            } 
         </script>
     </head>
     <body>
@@ -53,7 +73,7 @@
                         <button class="btn btn-outline-dark">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="countBadge"></span>
                         </button>
                     </form>
                 </div>

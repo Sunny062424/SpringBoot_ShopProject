@@ -4,12 +4,72 @@
         <link rel="stylesheet" href="css/list.css" />
         <title>CART LIST</title>
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-        <script src="js/list.js"></script>
+        <script>
+            $(function(){
+                $.ajax({
+                  url:'/cartlist_api',
+                  success:function(data) {
+                    let priceList = [];
+                    //let date = document.querySelector('select');
+                    //$(date).append('<option value="">날짜선택</option>');
+                      for (let i = 0; i < data.length; i++) {
+                      let row = data[i];
+                      let tr = $('<tr></tr>');
+                      tr.append('<td>' + row['idx'] + '</td>');
+                      tr.append('<td>' + row['time'] + '</td>');
+                      tr.append('<td>' + row['product'] + '</td>');
+                      tr.append('<td>' + row['price'] + '</td>');
+                      tr.append('<td>' + '<button id="button" onclick="del('+row['idx']+')">삭제</button>' + '</td>');
+                      $('.list tbody').append(tr);
+                      //$(date).append('<option value="">' + row['created'] + '</option>');
+                      priceList.push(row['price']);
+                      let total = 0;
+                      let amount = priceList.length;
+                      for (let j = 0; j < priceList.length; j++){
+                        total = total + priceList[j];
+                      }
+                      console.log(data)
+                      console.log(total)
+                      var receivedCountData = total;
+                      var totalPrice = document.getElementById("totalPrice");
+                      totalPrice.textContent = receivedCountData;
+
+                      var totalAmount= document.getElementById("totalAmount");
+                      totalAmount.textContent = amount;
+
+                    }
+                    //const set = new Set(timeList);
+                    //let timeArray = Array.from(set);
+                    //timeList.pushfor(let j = 0; j < timeArray.length; j++){
+                      //$(date).append(`<option value=${timeArray[j]}>${timeArray[j]}</option>`);
+                    //}
+                  }
+                });
+              });
+        
+              function del(idx){
+                $.ajax({
+                  url:'/delete_cartlist',
+                  data:{ idx : idx},
+                  success:function(data) {
+                    location.href = '/list';
+                    alert("상품을 장바구니에서 삭제했습니다.");
+                  }
+                });
+              }
+
+              document.addEventListener("DOMContentLoaded", function() {
+                var continueShoppingBtn = document.getElementById("continueShoppingBtn");
+                continueShoppingBtn.addEventListener("click", function() {
+                  window.location.href = "/main";
+                });
+              });
+        </script>
     </head>
     <body>
         <h1>CART LIST</h1>
         <br>
-        <select id="dates" onchange="selectdate(this)">
+        <!--<select id="dates" onchange="selectdate(this)">-->
             
         </select>
 
@@ -22,7 +82,13 @@
             <tbody>
             </tbody>
         </table>
-        
-        <a href="/main">쇼핑 계속하기</a>
+        <div class="totalPriceInfo">
+            Total: <span id="totalAmount">0</span> 개 <br>
+        총 결제금액: <span id="totalPrice">0</span> 원
+        </div>
+        <div class="cart__mainbtns">
+            <button id="continueShoppingBtn" class="cart__bigorderbtn left">쇼핑 계속하기</button>
+            <button class="cart__bigorderbtn right">주문하기</button>
+        </div>
     </body>
 </html>

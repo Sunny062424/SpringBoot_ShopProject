@@ -26,3 +26,46 @@ th {
 td {
     text-align: center;
 }
+
+cart__mainbtns {
+    width: 420px;
+    height: 200px;
+    padding-top: 40px;
+    display: block;
+    margin: auto;
+  }
+
+.cart__mainbtns {
+    width: 420px;
+    height: 200px;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    margin: auto;
+}
+
+.cart__bigorderbtn {
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.cart__bigorderbtn.left {
+    background-color: white;
+    border: 1px lightgray solid;
+    margin-right: 10px;
+}
+
+.cart__bigorderbtn.right {
+    background-color: rgba(255,160,72);
+    color: white;
+    border: none;
+}
+
+.totalPriceInfo {
+    font-size: 16px;
+    text-align: right;
+    margin-right: 74px;
+}

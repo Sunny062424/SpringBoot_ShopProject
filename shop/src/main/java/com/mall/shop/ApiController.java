@@ -1,5 +1,6 @@
 package com.mall.shop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,24 @@ public class ApiController {
 		return result;
 	}
 
+	@GetMapping("cartlist_api")
+	public ArrayList<Cart> hiApi() {
+		DB db = new DB();
+		ArrayList<Cart> result = db.selectData();
+		return result;
+	}
+
+	@GetMapping("/delete_cartlist")
+	public void deleteData(@RequestParam(value = "idx") String idx){
+		DB db = new DB();
+		db.deleteData(idx);
+	}
+	
+	@GetMapping("count")
+	public long countApi() {
+		DB db = new DB();
+		long result = db.countData();
+		return result;
+	}
 	
 }
